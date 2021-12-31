@@ -5,7 +5,8 @@ pipeline
     {
         VERSION="${env.BUILD_ID}"
     }
-    stages{
+    stages
+    {
         stage("Sonar Quality Check")
         {
             agent
@@ -60,11 +61,13 @@ pipeline
             {
                 script
                 {
-                    dir('kubernetes/') {
+                    dir('kubernetes/')
+                     {
                         withEnv(['DATREE_TOKEN=cyLUhPV4NEEpv2MMdcEdgD']) {
                               sh 'helm datree test myapp/'
                         }
-                }
+                     }
+                 }
             }
         }
         stage("Helm push")
@@ -75,7 +78,7 @@ pipeline
                 {
                     withCredentials([string(credentialsId: 'nexus-pass', variable: 'nexuspwd')])
                     {
-                         dir('kubernetes/')
+                        dir('kubernetes/')
                         {
                         sh '''
                         helmversion=${ helm show chart myapp | grep version | cut -d: -f 2 | tr -d '' }
@@ -89,5 +92,4 @@ pipeline
             }
         }
     }    
-}
 }
