@@ -81,9 +81,9 @@ pipeline
                         dir('kubernetes/')
                         {
                         sh '''
-                        helmversion=${ helm show chart myapp | grep version | cut -d: -f 2 | tr -d '' }
-                        tar -czvf myapp-${helmversion}.tgz myapp/
-                        curl -u admin:$nexuspwd http://34.125.101.133/:8081/repository/helm-hosted/ --upload-file myapp-${helmversion}.tgz -v
+                            helmversion=$( helm show chart myapp | grep version | cut -d: -f 2 | tr -d ' ')
+                            tar -czvf  myapp-${helmversion}.tgz myapp/
+                            curl -u admin:$nexuspwd http://34.125.101.133/:8081/repository/helm-hosted/ --upload-file myapp-${helmversion}.tgz -v
                         '''
                         }
                         
