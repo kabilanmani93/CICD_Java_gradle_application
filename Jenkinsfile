@@ -1,4 +1,5 @@
-pipeline{
+pipeline
+{
     agent any
     environment
     {
@@ -53,6 +54,20 @@ pipeline{
                 
             }
         }
-    }
-    
+
+        stage("Datree: Helm Manifest validation")
+        {
+            steps
+            {
+                script
+                {
+                    dir('kubernetes/') {
+                        withEnv(['DATREE_TOKEN=cyLUhPV4NEEpv2MMdcEdgD']) {
+                              sh 'helm datree test myapp/'
+                        }
+                }
+            }
+        }
+    }    
+}
 }
